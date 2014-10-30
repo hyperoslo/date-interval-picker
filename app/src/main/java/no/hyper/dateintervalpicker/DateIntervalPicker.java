@@ -11,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -31,10 +30,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
 
     private int downPos;
     private ArrayList<LinearLayout> selectedItems;
-    private int swipe;
-    private static final int LEFT = -1;
-    private static final int NONE = 0;
-    private static final int RIGHT = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +51,8 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.date_interval_picker, menu);
-        return true;
+        //getMenuInflater().inflate(R.menu.date_interval_picker, menu);
+        return false;
     }
 
     @Override
@@ -89,8 +85,12 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         if (e.getActionMasked() == MotionEvent.ACTION_DOWN) {
             clearSelected();
             downPos = calendar.pointToPosition((int) e.getX(), (int) e.getY());
+
             if (downPos >= adapter.getStartPosition()) {
                 selectItem(downPos);
+            }
+            else if ( downPos == -1 ) {
+                downPos = adapter.getCount() -1;
             }
             return true;
         }
@@ -98,7 +98,6 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
             int pos = calendar.pointToPosition((int)e.getX(),(int) e.getY());
 
             if (pos > downPos) {
-                swipe = RIGHT;
                 clearSelected();
                 for (int i = downPos; i <= pos; i++) {
                     selectItem(i);
@@ -106,7 +105,6 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
             }
             //pos is -1 if inside grid but on empty cell
             else if (pos < downPos && pos > -1) {
-                swipe = LEFT;
                 clearSelected();
                 //reverse adding to have the lowest date at index 0
                 for (int i = pos; i <= downPos; i++) {
@@ -117,7 +115,6 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
             return true;
         }
         if (e.getActionMasked() == MotionEvent.ACTION_UP) {
-            swipe = NONE;
             if ( ! selectedItems.isEmpty() ) {
                 CharSequence dateDown = ((TextView) selectedItems.get(0).findViewById(R.id.date)).getText();
                 CharSequence dateUp = ((TextView) selectedItems.get(selectedItems.size() - 1).findViewById(R.id.date)).getText();
