@@ -178,6 +178,14 @@ public class CalendarAdapter extends BaseAdapter {
         return "" + calendar.get(Calendar.YEAR);
     }
 
+    public int getYear() {
+        return visibleYear;
+    }
+
+    public int getMonth() {
+        return visibleMonth;
+    }
+
     public int getStartPosition() {
         return startPosition;
     }

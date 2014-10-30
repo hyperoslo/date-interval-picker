@@ -2,6 +2,7 @@ package no.hyper.dateintervalpicker;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -27,7 +29,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
 
     private Date fromDate, toDate;
 
-    private int downPos, upPos;
+    private int downPos;
     private ArrayList<LinearLayout> selectedItems;
     private int swipe;
     private static final int LEFT = -1;
@@ -118,7 +120,16 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
             if ( ! selectedItems.isEmpty() ) {
                 CharSequence dateDown = ((TextView) selectedItems.get(0).findViewById(R.id.date)).getText();
                 CharSequence dateUp = ((TextView) selectedItems.get(selectedItems.size() - 1).findViewById(R.id.date)).getText();
-                Toast.makeText(this, dateDown + ". til " + dateUp + ". " + adapter.getMonthString(), Toast.LENGTH_SHORT).show();
+
+                Calendar cal = Calendar.getInstance();
+
+                cal.set(Calendar.YEAR, adapter.getYear());
+                cal.set(Calendar.MONTH, adapter.getMonth());
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt((String) dateDown));
+
+                fromDate = cal.getTime();
+                cal.set(Calendar.DAY_OF_MONTH, Integer.parseInt((String) dateUp));
+                toDate = cal.getTime();
             }
             return true;
         }
@@ -172,4 +183,21 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         selectedItems.clear();
     }
 
+
+    public void confirm(View v) {
+        if ( fromDate != null) {
+            Intent intent = new Intent();
+
+            intent.putExtra("from", fromDate.getTime());
+            intent.putExtra("to", toDate.getTime());
+            this.setResult(100, intent);
+            Toast.makeText(this, fromDate.toString() + " to " + toDate, Toast.LENGTH_LONG).show();
+        }
+        else {
+            this.setResult(-100);
+            Toast.makeText(this, "No dates selected", Toast.LENGTH_LONG).show();
+        }
+
+        this.finish();
+    }
 }
