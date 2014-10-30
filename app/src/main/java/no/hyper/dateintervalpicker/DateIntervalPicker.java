@@ -38,8 +38,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         setContentView(R.layout.activity_date_interval_picker);
         calendar = (GridView) findViewById(R.id.calendar_grid);
 
-        adapter = new CalendarAdapter(this,
-                R.layout.date_item);
+        adapter = new CalendarAdapter(this);
 
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);

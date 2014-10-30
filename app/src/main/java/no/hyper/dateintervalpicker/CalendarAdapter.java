@@ -37,11 +37,11 @@ public class CalendarAdapter extends BaseAdapter {
     private Context context;
     private int startPosition;
 
-    public CalendarAdapter(Context context, int resource) {
+    public CalendarAdapter(Context context) {
         this.context = context;
         calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(new Date());
-        locale = new Locale("NO");
+        locale = Locale.getDefault();
 
         //first set day initials for use in top row
         days = new ArrayList<String>();
