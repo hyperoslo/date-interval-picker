@@ -48,6 +48,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
+        ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString());
     }
 
 
