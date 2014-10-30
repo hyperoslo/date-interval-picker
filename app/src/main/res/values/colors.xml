@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue_dark">#41649A</color>
-    <color name="blue_light">#70ADEA</color>
-    <color name="red">#C94834</color>
     <color name="gray">#DDE3EA</color>
     <color name="gray_dark">#6A768B</color>
     <color name="gray_light">#F5F5F5</color>
-    <color name="white">#FFFFFF</color>
-    <color name="green">#9DCC39</color>
 </resources>
