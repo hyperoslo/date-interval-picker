@@ -36,7 +36,8 @@
             android:layout_height="wrap_content"
             android:textSize="22sp"
             android:gravity="center"
-            android:id="@+id/month"/>
+            android:id="@+id/month"
+            android:textAllCaps="true"/>
 
 
         <LinearLayout
