@@ -101,11 +101,11 @@ public class CalendarAdapter extends BaseAdapter {
         dateView.setText(content);
 
         if ( content.equals("") || position < 7) {
-            dateView.setTextColor(Color.LTGRAY);
+            dateView.setTextColor(context.getResources().getColor(R.color.gray));
             convertView.setEnabled(false);
         }
         else {
-            dateView.setTextColor(Color.DKGRAY);
+            dateView.setTextColor(context.getResources().getColor(R.color.gray_dark));
             convertView.setEnabled(true);
 
         }

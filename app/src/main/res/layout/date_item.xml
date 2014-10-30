@@ -15,9 +15,9 @@
         android:id="@+id/date"
         android:textAllCaps="true"
         android:textSize="16sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textColor="@android:color/darker_gray"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:textColor="@color/gray_dark"
    />
 
 </LinearLayout>
