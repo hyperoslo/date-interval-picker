@@ -3,6 +3,7 @@ package no.hyper.dateintervalpicker;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -44,6 +45,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
         ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString());
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
 
