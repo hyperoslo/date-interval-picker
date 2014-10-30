@@ -154,12 +154,19 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
                 ((TextView) v.findViewById(R.id.date)).setTextColor(Color.WHITE);
             } else {
                 View v = selectedItems.get(0);
-                v.setBackground(getResources().getDrawable(R.drawable.selected_left_edge));
+
+                //make rounded corners on the edges of each week
+                if (calendar.getPositionForView(v) % 7 == 6 ) {
+                    v.setBackground(getResources().getDrawable(R.drawable.selected_single_item));
+                }
+                else {
+                    v.setBackground(getResources().getDrawable(R.drawable.selected_left_edge));
+                }
                 ((TextView) v.findViewById(R.id.date)).setTextColor(Color.WHITE);
                 for (int i = 1; i < selectedItems.size() - 1; i++) {
                     v = selectedItems.get(i);
 
-                    //make rounded corners on the edges of each week
+                    //again, make rounded corners
                     if (calendar.getPositionForView(v) % 7 == 6) {
                         v.setBackground(getResources().getDrawable(R.drawable.selected_right_edge));
                     } else if (calendar.getPositionForView(v) % 7 == 0) {
@@ -170,7 +177,14 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
                     ((TextView) v.findViewById(R.id.date)).setTextColor(Color.WHITE);
                 }
                 v = selectedItems.get(selectedItems.size() - 1);
-                v.setBackground(getResources().getDrawable(R.drawable.selected_right_edge));
+
+                if ( calendar.getPositionForView(v) % 7 == 0 ) {
+                    v.setBackground(getResources().getDrawable(R.drawable.selected_single_item));
+                }
+                else {
+                    v.setBackground(getResources().getDrawable(R.drawable.selected_right_edge));
+                }
+
                 ((TextView) v.findViewById(R.id.date)).setTextColor(Color.WHITE);
             }
         }
