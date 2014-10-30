@@ -78,7 +78,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         else if (v.getId() == R.id.prev_month) {
             adapter.previousMonth();
         }
-        ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString() + adapter.getYearString());
+        ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString());
     }
 
 
