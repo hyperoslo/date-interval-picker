@@ -197,7 +197,7 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     private void clearSelected() {
         for ( LinearLayout ll : selectedItems ) {
             ll.setBackgroundColor(Color.WHITE);
-            ((TextView) ll.findViewById(R.id.date)).setTextColor(Color.DKGRAY);
+            ((TextView) ll.findViewById(R.id.date)).setTextColor(activity.getResources().getColor(R.color.gray_dark));
         }
         selectedItems.clear();
     }
