@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 /**
  * Created by espenalmdahl on 31/10/14.
+ *
+ * This class is just a startup class for demo purpose.
  */
 public class MainActivity extends Activity {
 
@@ -20,14 +22,19 @@ public class MainActivity extends Activity {
         picker = (DateIntervalPicker) getFragmentManager().findFragmentById(R.id.picker_fragment);
     }
 
+    /**
+     * Called from the button in the main_activity layout.
+     *
+     * Shows how to access the to and from dates in the picker fragment and use them in your main activity
+     */
     public void confirm(View v) {
-        if ( picker.fromDate != null) {
+        if ( picker.getFromDate() != null) {
             Intent intent = new Intent();
 
-            intent.putExtra("from", picker.fromDate.getTime());
-            intent.putExtra("to", picker.toDate.getTime());
+            intent.putExtra("from", picker.getFromDate().getTime());
+            intent.putExtra("to", picker.getToDate().getTime());
             this.setResult(100, intent);
-            Toast.makeText(this, picker.fromDate.toString() + " to " + picker.toDate, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, picker.getFromDate() + " to " + picker.getToDate(), Toast.LENGTH_LONG).show();
         }
         else {
             this.setResult(-100);

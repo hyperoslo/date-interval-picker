@@ -26,7 +26,7 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     private GridView calendar;
     private PickerAdapter adapter;
 
-    public Date fromDate, toDate;
+    private Date fromDate, toDate;
 
     private int downPos;
     private ArrayList<LinearLayout> selectedItems;
@@ -61,18 +61,6 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
         this.activity = activity;
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     public void changeMonth(View v) {
         if (v.getId() == R.id.next_month) {
@@ -200,6 +188,14 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
             ((TextView) ll.findViewById(R.id.date)).setTextColor(Color.DKGRAY);
         }
         selectedItems.clear();
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
     }
 
 }
