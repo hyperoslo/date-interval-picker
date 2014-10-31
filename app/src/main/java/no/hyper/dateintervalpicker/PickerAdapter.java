@@ -25,7 +25,7 @@ import java.util.SortedMap;
 /**
  * Created by espenalmdahl on 28/10/14.
  */
-public class CalendarAdapter extends BaseAdapter {
+public class PickerAdapter extends BaseAdapter {
 
     private Calendar calendar;
     private Locale locale = Locale.getDefault();
@@ -37,7 +37,7 @@ public class CalendarAdapter extends BaseAdapter {
     private Context context;
     private int startPosition;
 
-    public CalendarAdapter(Context context) {
+    public PickerAdapter(Context context) {
         this.context = context;
         calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(new Date());
