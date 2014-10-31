@@ -24,22 +24,21 @@ import java.util.Date;
 public class DateIntervalPicker extends Fragment implements View.OnTouchListener{
 
     private GridView calendar;
+    private TextView month;
     private PickerAdapter adapter;
 
     private Date fromDate, toDate;
 
-    private int downPos;
+    private int downPos;  //grid position of touch start
     private ArrayList<LinearLayout> selectedItems;
 
-    private Activity activity;
+    private Activity activity;  //reference your main activity
 
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        //super.onCreate(savedInstanceState);
-        //setContentView(R.layout.date_interval_picker_fragment);
         View v = inflater.inflate(R.layout.date_interval_picker_fragment, container);
 
         calendar = (GridView) v.findViewById(R.id.calendar_grid);
@@ -49,7 +48,20 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
-        ((TextView) v.findViewById(R.id.month)).setText(adapter.getMonthString());
+        month = (TextView) v.findViewById(R.id.month);
+        month.setText(adapter.getMonthString());
+
+        View.OnClickListener ocl = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                changeMonth(view);
+            }
+        };
+
+        v.findViewById(R.id.next_month).setOnClickListener(ocl);
+        v.findViewById(R.id.prev_month).setOnClickListener(ocl);
+
+        //the calendar doesn't really work very well in landscape, so lock to portrait mode
         activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return v;
     }
@@ -69,7 +81,7 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
         else if (v.getId() == R.id.prev_month) {
             adapter.previousMonth();
         }
-        ((TextView) v.findViewById(R.id.month)).setText(adapter.getMonthString());
+        month.setText(adapter.getMonthString());
     }
 
 
