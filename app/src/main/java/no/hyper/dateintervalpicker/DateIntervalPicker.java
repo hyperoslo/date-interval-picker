@@ -2,16 +2,19 @@ package no.hyper.dateintervalpicker;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,39 +25,46 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateIntervalPicker extends Activity implements View.OnTouchListener{
+public class DateIntervalPicker extends Fragment implements View.OnTouchListener{
 
     private GridView calendar;
     private CalendarAdapter adapter;
 
-    private Date fromDate, toDate;
+    public Date fromDate, toDate;
 
     private int downPos;
     private ArrayList<LinearLayout> selectedItems;
 
+    private Activity activity;
+
+
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_date_interval_picker);
-        calendar = (GridView) findViewById(R.id.calendar_grid);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        //super.onCreate(savedInstanceState);
+        //setContentView(R.layout.date_interval_picker_fragment);
+        View v = inflater.inflate(R.layout.date_interval_picker_fragment, container);
 
-        adapter = new CalendarAdapter(this);
+        calendar = (GridView) v.findViewById(R.id.calendar_grid);
+
+        adapter = new CalendarAdapter(activity);
 
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
-        ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString());
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        ((TextView) v.findViewById(R.id.month)).setText(adapter.getMonthString());
+        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        return v;
     }
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.date_interval_picker, menu);
-        return false;
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -75,7 +85,7 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         else if (v.getId() == R.id.prev_month) {
             adapter.previousMonth();
         }
-        ((TextView) findViewById(R.id.month)).setText(adapter.getMonthString());
+        ((TextView) v.findViewById(R.id.month)).setText(adapter.getMonthString());
     }
 
 
@@ -196,21 +206,4 @@ public class DateIntervalPicker extends Activity implements View.OnTouchListener
         selectedItems.clear();
     }
 
-
-    public void confirm(View v) {
-        if ( fromDate != null) {
-            Intent intent = new Intent();
-
-            intent.putExtra("from", fromDate.getTime());
-            intent.putExtra("to", toDate.getTime());
-            this.setResult(100, intent);
-            Toast.makeText(this, fromDate.toString() + " to " + toDate, Toast.LENGTH_LONG).show();
-        }
-        else {
-            this.setResult(-100);
-            Toast.makeText(this, "No dates selected", Toast.LENGTH_LONG).show();
-        }
-
-        this.finish();
-    }
 }
