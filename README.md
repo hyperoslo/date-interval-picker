@@ -18,11 +18,11 @@ up.
     ```
 2. Add the DateIntervalPicker fragment to your layout
     ```
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
-        android:id="@+id/picker_fragment">
-    </fragment>
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
+            android:id="@+id/picker_fragment">
+        </fragment>
     ```
 3. Profit
