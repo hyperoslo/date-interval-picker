@@ -17,7 +17,7 @@ up.
     }
     ```
 2. Add the DateIntervalPicker fragment to your layout
-    ``` xml
+    ```
         <fragment
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
