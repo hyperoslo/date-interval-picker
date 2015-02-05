@@ -5,7 +5,7 @@ A nice little date interval picker for Android. It's implemented as a Fragment, 
 possible to use in an activity, a dialog or whatever you wish. Supports Android SDK version 16 and
 up.
 
-#usage
+# Usage
 1. Add the dependency to your build.gradle
     ```
     repositories {
