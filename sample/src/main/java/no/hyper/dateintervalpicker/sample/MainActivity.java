@@ -1,10 +1,13 @@
-package no.hyper.dateintervalpicker;
+package no.hyper.dateintervalpicker.sample;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
+
+import no.hyper.dateintervalpicker.DateIntervalPicker;
+
 
 /**
  * Created by espenalmdahl on 31/10/14.
