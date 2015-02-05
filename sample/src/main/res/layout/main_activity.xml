@@ -7,7 +7,7 @@
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:name="no.hyper.dateintervalpicker_sample.DateIntervalPicker"
+        android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
         android:id="@+id/picker_fragment">
 
     </fragment>
