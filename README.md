@@ -7,8 +7,7 @@ up.
 
 #usage
 1. Add the dependency to your build.gradle
-
-
+```
     repositories {
         mavenCentral()
     }
@@ -16,17 +15,14 @@ up.
     dependencies {
         compile 'no.hyper:dateintervalpicker:1.0.0@aar' //please note the magic '@aar' at the end
     }
-
-
+```
 2. Add the DateIntervalPicker fragment to your layout
-
-
+```
     <fragment
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
         android:id="@+id/picker_fragment">
     </fragment>
-
-
+``
 3. Profit
