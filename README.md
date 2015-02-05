@@ -24,5 +24,5 @@ up.
         android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
         android:id="@+id/picker_fragment">
     </fragment>
-``
+```
 3. Profit
