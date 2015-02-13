@@ -27,14 +27,8 @@ dependencies {
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-version = "1.0.0"
+version = "1.0.1"
 group = "no.hyper"
-
-configurations {
-    archives {
-        extendsFrom configurations.default
-    }
-}
 
 signing {
     required { has("release") && gradle.taskGraph.hasTask("uploadArchives") }

@@ -13,7 +13,7 @@ up.
    }
 
    dependencies {
-       compile 'no.hyper:dateintervalpicker:1.0.0@aar' //please note the magic '@aar' at the end
+       compile 'no.hyper:dateintervalpicker:1.0.1'
    }
 ```
 2. Add the DateIntervalPicker fragment to your layout
