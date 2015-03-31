@@ -12,23 +12,17 @@
         android:background="@color/gray_light"
         android:gravity="center_vertical"
         android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
         >
 
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:gravity="center"
-            android:id="@+id/prev_month"
-            >
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar_prev"
-                />
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/prev_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar_prev"
+            />
 
         <TextView
             android:layout_width="0dp"
@@ -40,22 +34,12 @@
             android:textAllCaps="true"
             android:textColor="@color/gray_dark"/>
 
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            android:paddingRight="@dimen/activity_horizontal_margin"
-            android:gravity="center"
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_calendar_next"
             android:id="@+id/next_month"
-            >
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_calendar_next"
-            />
-        </LinearLayout>
+        />
     </LinearLayout>
 
     <GridView
