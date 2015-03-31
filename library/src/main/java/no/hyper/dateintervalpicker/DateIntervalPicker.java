@@ -5,10 +5,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -33,6 +35,8 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
     private int downPos;  //grid position of touch start
     private ArrayList<LinearLayout> selectedItems;
 
+    TypedArray attributes;
+
     public DateIntervalPicker(Context context) {
         this(context, null, 0);
     }
@@ -43,6 +47,7 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
 
     public DateIntervalPicker(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        attributes = context.obtainStyledAttributes(attrs, R.styleable.DateIntervalPicker);
         onCreate();
     }
 
@@ -52,12 +57,16 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
 
         calendar = (GridView) v.findViewById(R.id.calendar_grid);
 
-        adapter = new PickerAdapter(getContext());
+        adapter = new PickerAdapter(getContext(), attributes);
 
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
+
+        int headerFontSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_headerTextSize, 14);
+
         month = (TextView) v.findViewById(R.id.month);
+        month.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
         month.setText(adapter.getMonthString());
 
         View.OnClickListener ocl = new View.OnClickListener() {
@@ -67,8 +76,13 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
             }
         };
 
-        v.findViewById(R.id.next_month).setOnClickListener(ocl);
-        v.findViewById(R.id.prev_month).setOnClickListener(ocl);
+        TextView tv = (TextView) v.findViewById(R.id.next_month);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+        tv.setOnClickListener(ocl);
+
+        tv = (TextView) v.findViewById(R.id.prev_month);
+        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+        tv.setOnClickListener(ocl);
 
         // the calendar doesn't really work very well in landscape, so lock to portrait mode
         // activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

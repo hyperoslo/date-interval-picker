@@ -1,7 +1,9 @@
 package no.hyper.dateintervalpicker;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +33,15 @@ public class PickerAdapter extends BaseAdapter {
     private Context context;
     private int startPosition;
 
-    public PickerAdapter(Context context) {
+    private int dateTextSize;
+
+    public PickerAdapter(Context context, TypedArray attributes) {
         this.context = context;
         calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(new Date());
         locale = Locale.getDefault();
+
+        dateTextSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_dateTextSize, 14);
 
         //first set day initials for use in top row
         days = new ArrayList<String>();
@@ -86,6 +92,7 @@ public class PickerAdapter extends BaseAdapter {
                     .inflate(R.layout.date_item, parent, false);
 
             dateView = (TextView) convertView.findViewById(R.id.date);
+            dateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, dateTextSize);
             convertView.setTag(new ViewHolder(dateView));
         } else {
             ViewHolder viewHolder = (ViewHolder) convertView.getTag();
