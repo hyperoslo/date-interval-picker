@@ -23,7 +23,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        picker = (DateIntervalPicker) getFragmentManager().findFragmentById(R.id.picker_fragment);
+        picker = (DateIntervalPicker) findViewById(R.id.picker_fragment);
 
     }
 

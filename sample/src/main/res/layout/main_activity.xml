@@ -4,13 +4,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
+    <no.hyper.dateintervalpicker.DateIntervalPicker
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
         android:id="@+id/picker_fragment">
 
-    </fragment>
+    </no.hyper.dateintervalpicker.DateIntervalPicker>
 
     <LinearLayout
         android:layout_width="match_parent"

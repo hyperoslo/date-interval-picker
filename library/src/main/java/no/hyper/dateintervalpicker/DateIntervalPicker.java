@@ -3,10 +3,12 @@ package no.hyper.dateintervalpicker;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +22,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateIntervalPicker extends Fragment implements View.OnTouchListener{
+public class DateIntervalPicker extends LinearLayout implements View.OnTouchListener{
 
     private GridView calendar;
     private TextView month;
@@ -31,18 +33,26 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     private int downPos;  //grid position of touch start
     private ArrayList<LinearLayout> selectedItems;
 
-    private Activity activity;  //reference your main activity
+    public DateIntervalPicker(Context context) {
+        this(context, null, 0);
+    }
+
+    public DateIntervalPicker(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public DateIntervalPicker(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        onCreate();
+    }
 
 
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.date_interval_picker_fragment, container);
+    public View onCreate() {
+        View v = inflate(getContext(), R.layout.date_interval_picker_fragment, this);
 
         calendar = (GridView) v.findViewById(R.id.calendar_grid);
 
-        adapter = new PickerAdapter(activity);
+        adapter = new PickerAdapter(getContext());
 
         calendar.setAdapter(adapter);
         calendar.setOnTouchListener(this);
@@ -60,16 +70,9 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
         v.findViewById(R.id.next_month).setOnClickListener(ocl);
         v.findViewById(R.id.prev_month).setOnClickListener(ocl);
 
-        //the calendar doesn't really work very well in landscape, so lock to portrait mode
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        // the calendar doesn't really work very well in landscape, so lock to portrait mode
+        // activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         return v;
-    }
-
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = activity;
     }
 
 
@@ -196,7 +199,7 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     private void clearSelected() {
         for ( LinearLayout ll : selectedItems ) {
             ll.setBackgroundColor(Color.WHITE);
-            ((TextView) ll.findViewById(R.id.date)).setTextColor(activity.getResources().getColor(R.color.gray_dark));
+            ((TextView) ll.findViewById(R.id.date)).setTextColor(getContext().getResources().getColor(R.color.gray_dark));
         }
         selectedItems.clear();
     }
