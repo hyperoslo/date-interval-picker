@@ -89,6 +89,11 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
         return v;
     }
 
+    public void changeDate(Calendar cal) {
+
+        adapter.setDate(cal);
+        month.setText(adapter.getMonthString());
+    }
 
     public void changeMonth(View v) {
         if (v.getId() == R.id.next_month) {

@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import no.hyper.dateintervalpicker.DateIntervalPicker;
 
 /**
@@ -24,6 +26,9 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.main_activity);
 
         picker = (DateIntervalPicker) findViewById(R.id.picker_fragment);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -12);
+        picker.changeDate(cal);
 
     }
 

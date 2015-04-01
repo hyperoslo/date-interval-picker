@@ -151,6 +151,11 @@ public class PickerAdapter extends BaseAdapter {
         }
     }
 
+    public void setDate(Calendar calendar) {
+        buildArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        notifyDataSetChanged();
+    }
+
     public void nextMonth() {
         if (calendar.get(Calendar.MONTH) == Calendar.DECEMBER) {
             buildArray(Calendar.JANUARY, calendar.get(Calendar.YEAR) + 1);
