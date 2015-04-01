@@ -20,6 +20,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:paddingRight="@dimen/activity_horizontal_margin"
             android:textSize="18sp"
+            android:visibility="gone"
             />
 
         <TextView
@@ -40,6 +41,7 @@
             android:paddingLeft="@dimen/activity_horizontal_margin"
             android:text="&gt;"
             android:textSize="18sp"
+            android:visibility="gone"
             />
         </LinearLayout>
 
@@ -59,9 +61,9 @@
         android:stretchMode="columnWidth"
         android:gravity="center"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/bottom_border"
         android:verticalSpacing="2dp"
     >
+        <!--android:background="@drawable/bottom_border"-->
 
     </GridView>
 

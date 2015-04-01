@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateIntervalPicker extends LinearLayout implements View.OnTouchListener{
+public class DateIntervalPicker extends RelativeLayout implements View.OnTouchListener{
 
     private GridView calendar;
     private TextView month;
@@ -52,7 +53,7 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
     }
 
 
-    public View onCreate() {
+    public void onCreate() {
         View v = inflate(getContext(), R.layout.date_interval_picker_fragment, this);
 
         calendar = (GridView) v.findViewById(R.id.calendar_grid);
@@ -60,7 +61,8 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
         adapter = new PickerAdapter(getContext(), attributes);
 
         calendar.setAdapter(adapter);
-        calendar.setOnTouchListener(this);
+        if (attributes.getBoolean(R.styleable.DateIntervalPicker_datePickable, false))
+            calendar.setOnTouchListener(this);
         selectedItems = new ArrayList<LinearLayout>();
 
         int headerFontSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_headerTextSize, 14);
@@ -69,28 +71,29 @@ public class DateIntervalPicker extends LinearLayout implements View.OnTouchList
         month.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
         month.setText(adapter.getMonthString());
 
-        View.OnClickListener ocl = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeMonth(view);
-            }
-        };
+        boolean showPreAndNext = attributes.getBoolean(R.styleable.DateIntervalPicker_showPreAndNext, true);
 
-        TextView tv = (TextView) v.findViewById(R.id.next_month);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
-        tv.setOnClickListener(ocl);
+        if (showPreAndNext) {
+            View.OnClickListener ocl = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    changeMonth(view);
+                }
+            };
 
-        tv = (TextView) v.findViewById(R.id.prev_month);
-        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
-        tv.setOnClickListener(ocl);
+            TextView tv = (TextView) v.findViewById(R.id.next_month);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+            tv.setOnClickListener(ocl);
 
+            tv = (TextView) v.findViewById(R.id.prev_month);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+            tv.setOnClickListener(ocl);
+        }
         // the calendar doesn't really work very well in landscape, so lock to portrait mode
         // activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        return v;
     }
 
     public void changeDate(Calendar cal) {
-
         adapter.setDate(cal);
         month.setText(adapter.getMonthString());
     }
