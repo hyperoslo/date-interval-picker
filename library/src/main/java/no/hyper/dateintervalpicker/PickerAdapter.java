@@ -27,7 +27,9 @@ public class PickerAdapter extends BaseAdapter {
     private Locale locale = Locale.getDefault();
     private ArrayList<String> days;
     private ArrayList<String> dates;
-    private HashMap<Integer, LinearLayout> containers;
+
+    // TODO: Not a very good practise to holding to the view layer components
+    private HashMap<Integer, TextView> containers;
     private int visibleMonth;
     private int visibleYear;
     private Context context;
@@ -54,7 +56,7 @@ public class PickerAdapter extends BaseAdapter {
             }
         }
         dates = new ArrayList<String>();
-        containers = new HashMap<Integer, LinearLayout>();
+        containers = new HashMap<Integer, TextView>();
         buildArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 
     }
@@ -74,7 +76,7 @@ public class PickerAdapter extends BaseAdapter {
     }
 
     @Override
-    public LinearLayout getItem(int i) {
+    public TextView getItem(int i) {
         return containers.get(i);
     }
 
@@ -91,7 +93,7 @@ public class PickerAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.date_item, parent, false);
 
-            dateView = (TextView) convertView.findViewById(R.id.date);
+            dateView = (TextView) convertView;
             dateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, dateTextSize);
             convertView.setTag(new ViewHolder(dateView));
         } else {
@@ -108,9 +110,9 @@ public class PickerAdapter extends BaseAdapter {
         else {
             dateView.setTextColor(context.getResources().getColor(R.color.gray_dark));
             convertView.setEnabled(true);
-
         }
-        containers.put(position, (LinearLayout) convertView);
+
+        containers.put(position, dateView);
         return convertView;
     }
 
@@ -125,9 +127,9 @@ public class PickerAdapter extends BaseAdapter {
         dates.clear();
         startPosition = 7; //minumum starting position is Monday after day row.
 
-        for (LinearLayout ll : containers.values()) {
-            ll.setBackgroundColor(Color.TRANSPARENT);
-        }
+//        for (LinearLayout ll : containers.values()) {
+//            ll.setBackgroundColor(Color.TRANSPARENT);
+//        }
 
         //add day names for first row
         for (String day : days) {

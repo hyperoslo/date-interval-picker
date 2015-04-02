@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
      * @param v
      */
     public void confirm(View v) {
-        Toast.makeText(this, picker.getFromDate() + " to " + picker.getToDate() + " selected", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, picker.getFromDate() + " to " + picker.getToDate() + " selected", Toast.LENGTH_SHORT).show();
     }
 
 }

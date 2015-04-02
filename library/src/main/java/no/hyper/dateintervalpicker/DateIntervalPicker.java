@@ -34,7 +34,7 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
     private Date fromDate, toDate;
 
     private int downPos;  //grid position of touch start
-    private ArrayList<LinearLayout> selectedItems;
+    private ArrayList<TextView> selectedItems;
 
     TypedArray attributes;
 
@@ -63,7 +63,7 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
         calendar.setAdapter(adapter);
         if (attributes.getBoolean(R.styleable.DateIntervalPicker_datePickable, false))
             calendar.setOnTouchListener(this);
-        selectedItems = new ArrayList<LinearLayout>();
+        selectedItems = new ArrayList<TextView>();
 
         int headerFontSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_headerTextSize, 14);
 
@@ -169,7 +169,7 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
 
 
     private void selectItem(int position) {
-        LinearLayout ll = (LinearLayout) calendar.getItemAtPosition(position);
+        TextView ll = (TextView) calendar.getItemAtPosition(position);
         if ( ll != null && ll.isEnabled()) {
             selectedItems.add(ll);
         }
@@ -221,7 +221,7 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
     }
 
     private void clearSelected() {
-        for ( LinearLayout ll : selectedItems ) {
+        for ( TextView ll : selectedItems ) {
             ll.setBackgroundColor(Color.TRANSPARENT);
             ((TextView) ll.findViewById(R.id.date)).setTextColor(getContext().getResources().getColor(R.color.gray_dark));
         }
