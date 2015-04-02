@@ -6,14 +6,14 @@
     android:layout_height="match_parent">
 
     <no.hyper.dateintervalpicker.DateIntervalPicker
-        app:dateTextSize="6sp"
-        app:headerTextSize="6sp"
-        android:layout_width="120dp"
+        app:dateTextSize="14sp"
+        app:headerTextSize="14sp"
+        app:datePickable="true"
+        app:showPreAndNext="true"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
-        android:id="@+id/picker_fragment">
-
-    </no.hyper.dateintervalpicker.DateIntervalPicker>
+        android:id="@+id/picker_fragment"/>
 
     <LinearLayout
         android:layout_width="match_parent"

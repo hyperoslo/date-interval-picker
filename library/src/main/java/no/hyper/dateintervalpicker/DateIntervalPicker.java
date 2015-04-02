@@ -84,10 +84,12 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
             TextView tv = (TextView) v.findViewById(R.id.next_month);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
             tv.setOnClickListener(ocl);
+            tv.setVisibility(View.VISIBLE);
 
             tv = (TextView) v.findViewById(R.id.prev_month);
             tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
             tv.setOnClickListener(ocl);
+            tv.setVisibility(View.VISIBLE);
         }
         // the calendar doesn't really work very well in landscape, so lock to portrait mode
         // activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -220,7 +222,7 @@ public class DateIntervalPicker extends RelativeLayout implements View.OnTouchLi
 
     private void clearSelected() {
         for ( LinearLayout ll : selectedItems ) {
-            ll.setBackgroundColor(Color.WHITE);
+            ll.setBackgroundColor(Color.TRANSPARENT);
             ((TextView) ll.findViewById(R.id.date)).setTextColor(getContext().getResources().getColor(R.color.gray_dark));
         }
         selectedItems.clear();

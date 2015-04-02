@@ -126,7 +126,7 @@ public class PickerAdapter extends BaseAdapter {
         startPosition = 7; //minumum starting position is Monday after day row.
 
         for (LinearLayout ll : containers.values()) {
-            ll.setBackgroundColor(Color.WHITE);
+            ll.setBackgroundColor(Color.TRANSPARENT);
         }
 
         //add day names for first row
