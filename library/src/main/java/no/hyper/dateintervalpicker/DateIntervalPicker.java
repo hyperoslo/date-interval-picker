@@ -3,16 +3,21 @@ package no.hyper.dateintervalpicker;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -20,7 +25,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-public class DateIntervalPicker extends Fragment implements View.OnTouchListener{
+public class DateIntervalPicker extends RelativeLayout implements View.OnTouchListener{
 
     private GridView calendar;
     private TextView month;
@@ -29,49 +34,71 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     private Date fromDate, toDate;
 
     private int downPos;  //grid position of touch start
-    private ArrayList<LinearLayout> selectedItems;
+    private ArrayList<TextView> selectedItems;
 
-    private Activity activity;  //reference your main activity
+    TypedArray attributes;
+
+    public DateIntervalPicker(Context context) {
+        this(context, null, 0);
+    }
+
+    public DateIntervalPicker(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
+
+    public DateIntervalPicker(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        attributes = context.obtainStyledAttributes(attrs, R.styleable.DateIntervalPicker);
+        onCreate();
+    }
 
 
-
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.date_interval_picker_fragment, container);
+    public void onCreate() {
+        View v = inflate(getContext(), R.layout.date_interval_picker_fragment, this);
 
         calendar = (GridView) v.findViewById(R.id.calendar_grid);
 
-        adapter = new PickerAdapter(activity);
+        adapter = new PickerAdapter(getContext(), attributes);
 
         calendar.setAdapter(adapter);
-        calendar.setOnTouchListener(this);
-        selectedItems = new ArrayList<LinearLayout>();
+        if (attributes.getBoolean(R.styleable.DateIntervalPicker_datePickable, false))
+            calendar.setOnTouchListener(this);
+        selectedItems = new ArrayList<TextView>();
+
+        int headerFontSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_headerTextSize, 14);
+
         month = (TextView) v.findViewById(R.id.month);
+        month.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
         month.setText(adapter.getMonthString());
 
-        View.OnClickListener ocl = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeMonth(view);
-            }
-        };
+        boolean showPreAndNext = attributes.getBoolean(R.styleable.DateIntervalPicker_showPreAndNext, true);
 
-        v.findViewById(R.id.next_month).setOnClickListener(ocl);
-        v.findViewById(R.id.prev_month).setOnClickListener(ocl);
+        if (showPreAndNext) {
+            View.OnClickListener ocl = new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    changeMonth(view);
+                }
+            };
 
-        //the calendar doesn't really work very well in landscape, so lock to portrait mode
-        activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        return v;
+            TextView tv = (TextView) v.findViewById(R.id.next_month);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+            tv.setOnClickListener(ocl);
+            tv.setVisibility(View.VISIBLE);
+
+            tv = (TextView) v.findViewById(R.id.prev_month);
+            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, headerFontSize);
+            tv.setOnClickListener(ocl);
+            tv.setVisibility(View.VISIBLE);
+        }
+        // the calendar doesn't really work very well in landscape, so lock to portrait mode
+        // activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.activity = activity;
+    public void changeDate(Calendar cal) {
+        adapter.setDate(cal);
+        month.setText(adapter.getMonthString());
     }
-
 
     public void changeMonth(View v) {
         if (v.getId() == R.id.next_month) {
@@ -142,7 +169,7 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
 
 
     private void selectItem(int position) {
-        LinearLayout ll = (LinearLayout) calendar.getItemAtPosition(position);
+        TextView ll = (TextView) calendar.getItemAtPosition(position);
         if ( ll != null && ll.isEnabled()) {
             selectedItems.add(ll);
         }
@@ -194,9 +221,9 @@ public class DateIntervalPicker extends Fragment implements View.OnTouchListener
     }
 
     private void clearSelected() {
-        for ( LinearLayout ll : selectedItems ) {
-            ll.setBackgroundColor(Color.WHITE);
-            ((TextView) ll.findViewById(R.id.date)).setTextColor(activity.getResources().getColor(R.color.gray_dark));
+        for ( TextView ll : selectedItems ) {
+            ll.setBackgroundColor(Color.TRANSPARENT);
+            ((TextView) ll.findViewById(R.id.date)).setTextColor(getContext().getResources().getColor(R.color.gray_dark));
         }
         selectedItems.clear();
     }

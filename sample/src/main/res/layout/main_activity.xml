@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment
+    <no.hyper.dateintervalpicker.DateIntervalPicker
+        app:dateTextSize="14sp"
+        app:headerTextSize="14sp"
+        app:datePickable="true"
+        app:showPreAndNext="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:name="no.hyper.dateintervalpicker.DateIntervalPicker"
-        android:id="@+id/picker_fragment">
-
-    </fragment>
+        android:id="@+id/picker_fragment"/>
 
     <LinearLayout
         android:layout_width="match_parent"

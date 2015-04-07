@@ -1,7 +1,9 @@
 package no.hyper.dateintervalpicker;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +27,23 @@ public class PickerAdapter extends BaseAdapter {
     private Locale locale = Locale.getDefault();
     private ArrayList<String> days;
     private ArrayList<String> dates;
-    private HashMap<Integer, LinearLayout> containers;
+
+    // TODO: Not a very good practise to holding to the view layer components
+    private HashMap<Integer, TextView> containers;
     private int visibleMonth;
     private int visibleYear;
     private Context context;
     private int startPosition;
 
-    public PickerAdapter(Context context) {
+    private int dateTextSize;
+
+    public PickerAdapter(Context context, TypedArray attributes) {
         this.context = context;
         calendar = Calendar.getInstance(Locale.getDefault());
         calendar.setTime(new Date());
         locale = Locale.getDefault();
+
+        dateTextSize = attributes.getDimensionPixelSize(R.styleable.DateIntervalPicker_dateTextSize, 14);
 
         //first set day initials for use in top row
         days = new ArrayList<String>();
@@ -48,7 +56,7 @@ public class PickerAdapter extends BaseAdapter {
             }
         }
         dates = new ArrayList<String>();
-        containers = new HashMap<Integer, LinearLayout>();
+        containers = new HashMap<Integer, TextView>();
         buildArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
 
     }
@@ -68,7 +76,7 @@ public class PickerAdapter extends BaseAdapter {
     }
 
     @Override
-    public LinearLayout getItem(int i) {
+    public TextView getItem(int i) {
         return containers.get(i);
     }
 
@@ -85,7 +93,8 @@ public class PickerAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(context)
                     .inflate(R.layout.date_item, parent, false);
 
-            dateView = (TextView) convertView.findViewById(R.id.date);
+            dateView = (TextView) convertView;
+            dateView.setTextSize(TypedValue.COMPLEX_UNIT_SP, dateTextSize);
             convertView.setTag(new ViewHolder(dateView));
         } else {
             ViewHolder viewHolder = (ViewHolder) convertView.getTag();
@@ -101,9 +110,9 @@ public class PickerAdapter extends BaseAdapter {
         else {
             dateView.setTextColor(context.getResources().getColor(R.color.gray_dark));
             convertView.setEnabled(true);
-
         }
-        containers.put(position, (LinearLayout) convertView);
+
+        containers.put(position, dateView);
         return convertView;
     }
 
@@ -118,9 +127,9 @@ public class PickerAdapter extends BaseAdapter {
         dates.clear();
         startPosition = 7; //minumum starting position is Monday after day row.
 
-        for (LinearLayout ll : containers.values()) {
-            ll.setBackgroundColor(Color.WHITE);
-        }
+//        for (LinearLayout ll : containers.values()) {
+//            ll.setBackgroundColor(Color.TRANSPARENT);
+//        }
 
         //add day names for first row
         for (String day : days) {
@@ -142,6 +151,11 @@ public class PickerAdapter extends BaseAdapter {
         for (int i = calendar.get(Calendar.DAY_OF_MONTH); i <= calendar.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
             dates.add("" + i);
         }
+    }
+
+    public void setDate(Calendar calendar) {
+        buildArray(calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR));
+        notifyDataSetChanged();
     }
 
     public void nextMonth() {

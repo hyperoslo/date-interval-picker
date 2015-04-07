@@ -7,6 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.Calendar;
+
 import no.hyper.dateintervalpicker.DateIntervalPicker;
 
 /**
@@ -23,7 +25,10 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        picker = (DateIntervalPicker) getFragmentManager().findFragmentById(R.id.picker_fragment);
+        picker = (DateIntervalPicker) findViewById(R.id.picker_fragment);
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, -12);
+        picker.changeDate(cal);
 
     }
 
@@ -32,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
      * @param v
      */
     public void confirm(View v) {
-        Toast.makeText(this, picker.getFromDate() + " to " + picker.getToDate() + " selected", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, picker.getFromDate() + " to " + picker.getToDate() + " selected", Toast.LENGTH_SHORT).show();
     }
 
 }

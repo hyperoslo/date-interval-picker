@@ -1,0 +1,10 @@
+<resources>
+    <declare-styleable name="DateIntervalPicker">
+        <attr name="dateTextSize" format="dimension"/>
+        <attr name="headerTextSize" format="dimension"/>
+        <attr name="showPreAndNext" format="boolean"/>
+        <attr name="datePickable" format="boolean"/>
+        <attr name="headerPadding" format="dimension"/>
+        <attr name="bodyPadding" format="dimension"/>
+    </declare-styleable>
+</resources>
